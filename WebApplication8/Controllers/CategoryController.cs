@@ -33,7 +33,7 @@ namespace WebApplication8.Controllers
         }
         public IActionResult Delete() { return View(); }
 
-        [HttpDelete]
+        [HttpPost]
         public IActionResult Delete(string Name)
         {
             var obj = _db.Categories.Where(c => c.Name == Name).FirstOrDefault();
