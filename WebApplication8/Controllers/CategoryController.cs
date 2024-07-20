@@ -21,26 +21,73 @@ namespace WebApplication8.Controllers
 
         public IActionResult Create()
         {
-            
             return View();
         }
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            _db.Categories.Add(category);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if(category.Name.ToLower() == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "it is same");
+            }
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+          
+            return View();
         }
-        public IActionResult Delete() { return View(); }
-
-        [HttpPost]
-        public IActionResult Delete(string Name)
+     
+       
+        public IActionResult Delete(int? id)
         {
-            var obj = _db.Categories.Where(c => c.Name == Name).FirstOrDefault();
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
-
-            return RedirectToAction("Index");
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var exists = _db.Categories.Where(c => c.Id == id).FirstOrDefault();
+            if (exists == null)
+            {
+                return NotFound();
+            }
+            return View(exists);
         }
+
+        [HttpPost,ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+           var obj = _db.Categories.Where(c => c.Id == id).FirstOrDefault();
+           if(obj == null) { return NotFound(); }
+           _db.Categories.Remove(obj);
+           _db.SaveChanges();
+           return RedirectToAction("Index");
+        }
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var exists =_db.Categories.Where(c => c.Id == id).FirstOrDefault();
+            if (exists==null)
+            {
+               return NotFound();
+            }
+            return View(exists);
+        }
+        [HttpPost]
+        public IActionResult Edit(Category category)
+        {
+            if(ModelState.IsValid)
+            {
+                _db.Categories.Update(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
     }
 }

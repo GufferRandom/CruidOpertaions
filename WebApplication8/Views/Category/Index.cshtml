@@ -6,13 +6,10 @@
                 Category List
             </h2>
         </div>
-        <div class="col-3">
+        <div class="col-4 text-md-center" >
             <a asp-controller="Category" asp-action="Search" class="btn btn-primary"><i class="bi bi-search"></i> Search for  a category</a>
         </div>
-        <div class="col-3">
-            <a asp-controller="Category" asp-action="Delete" class="btn btn-primary"><i class="bi bi-trash"></i>Delete A category</a>
-        </div>
-        <div class="col-3 text-end">
+        <div class="col-4 text-end">
             <a asp-controller="Category" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i>Create New Category</a>
 
         </div>
@@ -36,6 +33,16 @@
         <tr>
                 <td>@obj.Name</td>
             <td>@obj.DisplayOrder</td>
+
+            <td>
+            <div class="w-75 btn-group" role="group">
+
+
+            <a asp-controller="Category" asp-action="Edit" asp-route-Id="@obj.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a asp-controller="Category" asp-action="Delete" asp-route-Id="@obj.Id" class="btn btn-danger mx-2"><i class="bi bi-trash"></i>Delete</a>
+
+            </div>
+            </td>
         </tr>
         }
     </tbody>
