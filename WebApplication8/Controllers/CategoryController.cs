@@ -34,6 +34,8 @@ namespace WebApplication8.Controllers
             {
                 _db.Categories.Add(category);
                 _db.SaveChanges();
+                TempData["success"] = "it was created";
+
                 return RedirectToAction("Index");
             }
           
